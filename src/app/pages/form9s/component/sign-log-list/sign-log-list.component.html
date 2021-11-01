@@ -1,0 +1,22 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover ">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center" width="200">簽核時間</th>
+            <th scope="col" class="text-center">步驟</th>
+            <th scope="col" class="text-center">簽核人</th>
+            <th scope="col" class="text-center">簽核</th>
+            <th scope="col" class="text-center">簽核意見</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td class="text-center">{{item.signDate | date:'YYYY/MM/dd HH:mm'}}</td>
+            <td class="text-center">{{item.stepName}}</td>
+            <td class="text-center">{{item.approver}}</td>
+            <td class="text-center">
+                <span class="" [ngxSignResultLabel]="item.signResultID">{{item.signOption}}</span>
+            </td>
+            <td class="" [innerHtml]="item.signContent|replace"></td>
+        </tr>
+    </tbody>
+</table>

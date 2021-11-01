@@ -1,0 +1,20 @@
+export class FormListModel {
+    formID: string = null;
+    formClass: string = null;
+    serial: string = null;
+    fillerID: string = null;
+    fillerName: string = null;
+    fillerDeptID: string = null;
+    fillerDept: string = null;
+    applicantID: string = null;
+    applicantName: string = null;
+    applicantDeptID: string = null;
+    applicantDept: string = null;
+    applicantDate: string = null;
+    status: number = 0;
+    updateDate: string = null;
+    flowID: string = null;
+    resultID: number = 0;
+    fileGroupID: string = null;
+    levelID: number = 1;
+}

@@ -1,0 +1,10 @@
+.dashboard-div {
+  margin: -1rem;
+
+  > .row {
+    margin: 0;
+    > div {
+      padding: 10px;
+    }
+  }
+}

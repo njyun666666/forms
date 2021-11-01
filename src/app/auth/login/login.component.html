@@ -1,0 +1,89 @@
+<div class="row justify-content-center align-items-center" id="login-main">
+  <div class="col-12  " id="login-left">
+
+    <div class="row">
+      <div class="col text-center">
+        <img src="assets\icons\icon-96x96.png" id="login-logo">
+      </div>
+    </div>
+
+    <div class="row">
+      <h2 class="col text-center " id="login-text">
+        Forms
+      </h2>
+    </div>
+
+    <div class="row MT">
+      <div class="col text-center  darkgoldenrod" id="login-text">
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="col-12 text-center" id="login-right">
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+
+      <div class="alert alert-danger" role="alert" *ngIf="loginMessage!==null">
+        {{loginMessage}}
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>帳號</mat-label>
+          <input matInput autocomplete="username" formControlName="account">
+          <mat-error *ngIf="account?.errors?.required">
+            請輸入帳號
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>密碼</mat-label>
+          <input matInput type="password" autocomplete="current-password" formControlName="password">
+          <mat-error *ngIf="password?.errors?.required">
+            請輸入密碼
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button nbButton status="primary" [nbSpinner]="isLogin" [disabled]="isLogin">登入</button>
+      </div>
+
+    </form>
+
+
+<!-- 
+    <div class="mt-5">
+
+      <button *ngIf="!isResetPw" type="button" nbButton status="basic" (click)="needResetPw()">忘記密碼</button>
+
+
+
+      <form *ngIf="isResetPw" [formGroup]="resetPWForm" (ngSubmit)="onSubmitResetPw(resetPWForm)">
+        <mat-form-field appearance="outline">
+          <mat-label>帳號</mat-label>
+          <input matInput autocomplete="username" formControlName="account">
+          <mat-error *ngIf="account?.errors?.required">
+            請輸入帳號
+          </mat-error>
+        </mat-form-field>
+
+        &nbsp;
+
+        <button nbButton status="basic" [nbSpinner]="isSubmitResetPw" [disabled]="isSubmitResetPw">發送重設密碼信</button>
+
+      </form>
+
+    </div> -->
+
+
+
+  </div>
+</div>

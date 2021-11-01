@@ -1,0 +1,82 @@
+<form [formGroup]="form" (ngSubmit)="addDeptSubmit()">
+
+
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>部門名稱</mat-label>
+                <input matInput formControlName="deptName">
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>部門層級</mat-label>
+                <mat-select formControlName="deptLevelID">
+                    <mat-option *ngFor="let item of deptLevelList" [value]="item.deptLevelID">{{item.levelName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+
+            <mat-form-field appearance="fill" class="w-100 org-picker-div">
+                <mat-label>上層部門</mat-label>
+                <input matInput formControlName="parentDeptName" readonly>
+
+                <ngx-org-dept-picker class="org-picker-btn" [deptIDControl]="parentDept"
+                    [deptNameControl]="parentDeptName" (orgPickerCallBackEmitter)="checkParentDept($event)" >
+                </ngx-org-dept-picker>
+
+                <!-- <ngx-org-dept-picker class="org-picker-btn" [deptArrayControl]="parentDept" [multiple]="true"
+                deptIDProp="aaaaaID" deptNameProp="bbbbbbName"
+                    (orgPickerCallBackEmitter)="checkParentDept($event)">
+                </ngx-org-dept-picker> -->
+
+
+                <!-- <ngx-org-user-picker class="org-picker-btn" [userControl]="parentDept">
+                </ngx-org-user-picker> -->
+
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>狀態</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option [value]="1">啟用</mat-option>
+                    <mat-option [value]="0">停用</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-end">
+            <button mat-raised-button color="primary" [nbSpinner]="deptFormIsSubmit" [disabled]="deptFormIsSubmit">
+                {{in_isAdd?'新增':'修改'}}
+            </button>
+        </div>
+    </div>
+
+    <!-- <pre>
+{{form.value | json}}
+</pre> -->
+
+</form>

@@ -1,0 +1,22 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover ">
+    <thead>
+        <tr>
+            <th scope="col" class="">附件</th>
+            <th scope="col" class="text-center">大小</th>
+            <th scope="col" class="text-center">上傳者</th>
+            <th scope="col" class="text-center">上傳時間</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td class="">
+                <a [href]="item.url" target="_blank">
+                    {{item.oFileName}}
+                </a>
+            </td>
+            <td class="text-center">{{item.sizeText}}</td>
+            <td class="text-center">{{item.userName}}</td>
+            <td class="text-center">{{item.uploadDate | date:'YYYY/MM/dd HH:mm'}}</td>
+        </tr>
+    </tbody>
+</table>

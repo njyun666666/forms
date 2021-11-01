@@ -1,0 +1,20 @@
+<div class="form-buttom">
+    <div class="">
+
+        <ng-content select=".left-btn-div"></ng-content>
+
+    </div>
+    <div class="">
+
+
+        <button nbButton matRipple [nbTooltip]="item.description" *ngFor="let item of list" hero size="giant"
+            [status]="setBtnColor(item.resultID)" (click)="submit(item)">
+            {{item.text}}
+        </button>
+
+
+        <ng-content select=".right-btn-div"></ng-content>
+
+
+    </div>
+</div>

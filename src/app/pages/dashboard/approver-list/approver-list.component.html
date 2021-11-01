@@ -1,0 +1,51 @@
+<mat-card [nbSpinner]="isLoading">
+    <mat-card-header>
+        <mat-card-title>
+            <i class="fas fa-file-signature"></i>
+            待簽核表單
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p0">
+
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover ">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center"></th>
+                    <th scope="col" class="text-center">級別</th>
+                    <th scope="col" class="text-center">送達時間</th>
+                    <th scope="col" class="text-center">表單</th>
+                    <th scope="col" class="text-center">編號</th>
+                    <th scope="col" class="text-center">目前步驟</th>
+                    <th scope="col" class="text-center">申請人</th>
+                    <th scope="col" class="text-center">申請部門</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of list">
+                    <td class="text-center">{{item.levelNumber}}</td>
+                    <td class="text-center">
+                        <span class="" [ngxFormLevelLabel]="item.levelID">{{item.level}}</span>
+                    </td>
+                    <td class="text-center">{{item.arrivalDate | date:'YYYY/MM/dd HH:mm'}}</td>
+                    <td class="text-center">{{item.formName}}</td>
+                    <td class="text-center">
+                        <a [routerLink]="['/form/sign/'+item.id]" [queryParams]="{formID:item.formID}">
+                            {{item.serial}}
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <ngx-step-approver [in_list]="item.nowStepApproverList"></ngx-step-approver>
+                    </td>
+                    <td class="text-center">{{item.applicantName}}</td>
+                    <td class="text-center">{{item.applicantDept}}</td>
+
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </mat-card-content>
+
+</mat-card>

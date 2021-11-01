@@ -1,0 +1,126 @@
+<div class="row mb-4">
+    <div class="col">
+        <h2>權限管理</h2>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-5">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <mat-card>
+                <!-- <mat-card-header>
+                    <mat-card-title>基本資料</mat-card-title>
+                </mat-card-header> -->
+                <mat-card-content>
+
+
+                    <div class="row">
+                        <div class="col">
+
+                            <mat-form-field appearance="fill" class="w-100 org-picker-div">
+                                <mat-label>部門員工</mat-label>
+                                <input matInput formControlName="name" readonly>
+                                <input type="hidden" formControlName="uid" (ngModelChange)="changeUser($event)">
+
+                                <ngx-org-user-picker *ngIf="!isAdmin" class="org-picker-btn" [uidControl]="uid"
+                                    [nameControl]="name" [onlyDeptUser]="true">
+                                </ngx-org-user-picker>
+
+                                <ngx-org-user-picker *ngIf="isAdmin" class="org-picker-btn" [uidControl]="uid"
+                                    [nameControl]="name">
+                                </ngx-org-user-picker>
+
+
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+                            <mat-form-field appearance="fill" class="w-100">
+                                <mat-label>遊戲</mat-label>
+                                <mat-select formControlName="appID" (ngModelChange)="changeApp($event)">
+                                    <mat-option value="2">通用功能</mat-option>
+                                    <mat-option class="option-appid-appname" *ngFor="let item of appList"
+                                        [value]="item.appID">
+                                        <span class="appid">{{item.appID}}</span>
+                                        <span class="appName">{{item.appName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <!-- <pre>
+{{this.form.value|json}}
+</pre> -->
+
+                </mat-card-content>
+            </mat-card>
+
+        </form>
+    </div>
+
+    <div class="col">
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>權限設定</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+
+                <div class="row mb-3" *ngFor="let main_item of menuList|filter:'mainMenu':0 | sort:'sort';">
+                    <div class="col">
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-checkbox class="mat-checkbox-layout-hover"
+                                    [indeterminate]="main_item.indeterminate" [(ngModel)]="main_item.status"
+                                    (ngModelChange)="setAll($event,main_item)">
+                                    {{main_item.menuName}}</mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="row children-menu"
+                            *ngFor="let item of menuList|filter: 'mainMenu':main_item.menuID | sort:'sort';">
+                            <div class="col">
+                                <mat-checkbox [(ngModel)]="item.status" class="mat-checkbox-layout-hover"
+                                    (ngModelChange)="updateAllComplete($event,item)">{{item.menuName}}</mat-checkbox>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row " *ngIf="menuList?.length>0">
+                    <div class="col">
+                        <button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+                            [nbSpinner]="isSubmit" [disabled]="isSubmit">送出</button>
+                    </div>
+                </div>
+
+                <!-- <pre>
+{{menuList|json}}
+</pre> -->
+                <!-- 
+                    <div class="row" *ngFor="let item of menuListArray.controls; let i=index">
+                        <div class="col" [formGroup]="item">
+                            {{item.value|json}}
+                            <mat-checkbox formControlName="status">{{item.get('menuName').value}}</mat-checkbox>
+                        </div>
+                    </div> -->
+
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+</div>

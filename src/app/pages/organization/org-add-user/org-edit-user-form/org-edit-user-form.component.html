@@ -1,0 +1,135 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>基本資料</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>姓名</mat-label>
+                        <input matInput formControlName="name">
+                        <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>員工編號</mat-label>
+                        <input matInput formControlName="employeeID">
+                        <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>狀態</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option [value]="1">啟用</mat-option>
+                            <mat-option [value]="0">停用</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+
+
+            <!-- <div class="row">
+        <div class="col">
+            <pre>
+                        {{form.value | json}}
+                    </pre>
+
+        </div>
+    </div> -->
+        </mat-card-content>
+
+
+
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [nbSpinner]="isSubmit" [disabled]="isSubmit">修改</button>
+        </mat-card-actions>
+
+
+    </mat-card>
+</form>
+
+<br><br>
+
+
+<div class="row">
+    <div class="col">
+
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    所屬部門
+                    <button type="button" mat-mini-fab color="primary" (click)="editStruct()" title="新增">
+                        <span class="material-icons">add </span>
+                    </button>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+
+                <table class="table table-hover w-100">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>部門</th>
+                            <th>職稱</th>
+                            <th>主要職務/兼職</th>
+                            <th>簽核權</th>
+                            <th>代理人</th>
+                            <th>公司別</th>
+                            <th>狀態</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of userStructList">
+                            <td>{{item.deptName}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.main?'主':'兼'}}</td>
+                            <td>{{item.signApprover?'是':'否'}}</td>
+                            <td>{{item.agentName}}</td>
+                            <td>{{item.companyTypeName}}</td>
+                            <td>
+                                <span *ngIf="item.status; else elseStatus" class="badge bg-primary">啟用</span>
+                                <ng-template #elseStatus>
+                                    <span class="badge bg-danger">停用</span>
+                                </ng-template>
+                            </td>
+                            <td>
+                                <button type="button" mat-raised-button color="primary"
+                                    (click)="editStruct(item)">修改</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+
+
+
+        </mat-card>
+
+    </div>
+</div>

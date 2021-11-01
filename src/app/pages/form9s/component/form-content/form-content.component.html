@@ -1,0 +1,16 @@
+<div class="info-form-content">
+
+
+    <nb-tabset>
+        <nb-tab tabTitle="表單資訊">
+            <ng-container *ngComponentOutlet="componentOutlet"></ng-container>
+        </nb-tab>
+        <nb-tab tabTitle="附件" [badgeText]="fileCount" [badgeStatus]="fileCount==='0'?'basic':'info'">
+            <ngx-file-list [in_formID]="formData.formID" (fileCountEmitter)="setFileCount($event)"></ngx-file-list>
+        </nb-tab>
+        <nb-tab tabTitle="簽核紀錄" [badgeText]="signCount" [badgeStatus]="signCount==='0'?'basic':'info'">
+            <ngx-sign-log-list [in_formID]="formData.formID" (countEmitter)="setSignCount($event)"></ngx-sign-log-list>
+        </nb-tab>
+    </nb-tabset>
+
+</div>

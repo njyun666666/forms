@@ -1,0 +1,310 @@
+<div class="form-content">
+
+
+
+    <form [formGroup]="form">
+
+        <table class="sr-form-header">
+            <tr>
+                <td class="sr-form-header-title">
+                    技術工作申請單
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td class="serial">
+                    工單編號：
+                    <!-- <mat-form-field *ngIf="false" class="">
+                        <input matInput formControlName="Serial">
+                    </mat-form-field> -->
+                    <ng-container>{{formData?.serial}}</ng-container>
+                </td>
+            </tr>
+        </table>
+
+        <table class="sr-form">
+            <tr>
+                <td class="title" [class.error]="form.get('applicantID').touched && form.get('applicantID').errors">
+                    申請人
+                </td>
+                <td class="text-center">
+                    <mat-form-field *ngIf="edit_ApplicantID">
+                        <mat-select formControlName="applicantID">
+                            <mat-option *ngFor="let item of applicantList" [value]="item.applicantID">
+                                {{item.applicantName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <ng-container *ngIf="!edit_ApplicantID">{{formData?.applicantName}}</ng-container>
+
+                </td>
+                <td class="title"
+                    [class.error]="form.get('applicantDeptID').touched && form.get('applicantDeptID').errors">
+                    申請部門
+                </td>
+                <td class="text-center">
+
+                    <mat-form-field *ngIf="edit_ApplicantDeptID">
+                        <mat-select formControlName="applicantDeptID">
+                            <mat-option *ngFor="let item of applicantDeptList" [value]="item.applicantDeptID">
+                                {{item.applicantDept}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <ng-container *ngIf="!edit_ApplicantDeptID">{{formData?.applicantDept}}</ng-container>
+
+                </td>
+                <td class="title">申請日期</td>
+                <td class="text-center">
+                    {{formData?.applicantDate | date :'YYYY/MM/dd HH:mm'}}
+                </td>
+            </tr>
+            <tr>
+                <td class="title">級別</td>
+                <td colspan="5">
+                    <mat-radio-group color="primary" formControlName="levelID">
+                        <mat-radio-button *ngFor="let item of baseData.levels" [value]="item.levelID">{{item.level}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </tr>
+            <tr>
+                <td class="title" [class.error]="(form.get('type').touched && form.get('type').errors )
+                    || (form.get('type').value===5 && form.get('other').errors)">
+                    專案屬性
+                </td>
+                <td colspan="5">
+                    <mat-radio-group color="primary" formControlName="type">
+                        <mat-radio-button [value]="1">官網</mat-radio-button>
+                        <mat-radio-button [value]="2">活動</mat-radio-button>
+                        <mat-radio-button [value]="3">後台</mat-radio-button>
+                        <mat-radio-button [value]="4">DB資料撈取</mat-radio-button>
+                        <mat-radio-button [value]="5">其他</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-form-field *ngIf="edit_Type">
+                        <input matInput formControlName="other" [readonly]="!edit_Type">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                    <ng-container *ngIf="!edit_Type"><span>{{formData.other}}</span></ng-container>
+                </td>
+            </tr>
+            <tr>
+                <td class="title" [class.error]="Subject.touched && Subject.errors">
+                    主旨
+                    <!-- <div *ngIf="Subject.touched && Subject.errors">請輸入主旨</div> -->
+                </td>
+                <td colspan="5">
+                    <mat-form-field *ngIf="edit_Subject" class="w-100">
+                        <!-- <mat-label>主旨</mat-label> -->
+                        <input matInput formControlName="subject">
+                        <!-- <mat-error *ngIf="Subject.errors">請輸入主旨</mat-error> -->
+                    </mat-form-field>
+                    <ng-container *ngIf="!edit_Subject">
+                        {{formData.subject}}
+                    </ng-container>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="title" [class.error]="Content.touched && Content.errors">
+                    需求說明
+
+                    <span *ngIf="edit_Content">
+                        <br>
+                        ({{Content.value?Content.value.length:0 }}/2000字內)
+
+                        <span *ngIf="Content?.errors?.maxlength"
+                            [class.error]="Content?.errors?.maxlength"><br><br>超過字數</span>
+
+                    </span>
+                </td>
+                <td colspan="5" class="sr-content">
+                    <ckeditor *ngIf="edit_Content" formControlName="content" [editor]="editor"
+                        [config]="ckeditorConfig"></ckeditor>
+                    <div *ngIf="!edit_Content" [innerHtml]="contentHTML" class="ckeditor-view"></div>
+                </td>
+            </tr>
+            <!-- <tr>
+                <td class="title" [class.error]="form.get('havePhone').touched && form.get('havePhone').errors">
+                    手機資料
+                </td>
+                <td colspan="5">
+
+                    <mat-radio-group color="primary" formControlName="havePhone">
+                        <mat-radio-button [value]="0">無</mat-radio-button>
+                        <mat-radio-button [value]="1">有</mat-radio-button>
+                    </mat-radio-group>
+
+                </td>
+            </tr> -->
+            <tr>
+                <td class="title">期望日期</td>
+                <td colspan="5">
+                    <mat-form-field *ngIf="edit_ExpectedDate">
+                        <input type="date" matInput ngxDateIsNull formControlName="expectedDate">
+                    </mat-form-field>
+                    <ng-container *ngIf="!edit_ExpectedDate">{{form.get('expectedDate').value | date :'YYYY/MM/dd' }}
+                    </ng-container>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="6" class="title">
+                    技術預計工作
+                    <button *ngIf="edit_TaskOwnerList" nbButton status="primary" size="tiny" nbTooltip="加一人"
+                        (click)="addTaskOwnerFormGroup()"><i class="fas fa-plus"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td class="sub-title">承辦人</td>
+                <td class="sub-title">技術工作天數</td>
+                <td class="sub-title">測試天數</td>
+                <td class="sub-title">預計開工日期</td>
+                <td class="sub-title">預計完成日期</td>
+                <td class="sub-title">實際開工日期</td>
+            </tr>
+
+            <ng-container formArrayName="taskOwnerList">
+
+                <ng-container *ngIf="taskOwnerList.length===0">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-container>
+
+
+                <ng-container *ngFor="let item of taskOwnerList.controls; let i=index" [formGroupName]="i">
+                    <tr>
+                        <!-- 承辦人 -->
+                        <td class="text-center">
+                            <input type="hidden" formControlName="uid">
+                            <input type="hidden" formControlName="name">
+
+                            <ng-container>{{item.get('name').value}}</ng-container>
+
+                            <ngx-org-user-picker *ngIf="edit_TaskOwnerList" class="org-picker-btn"
+                                [uidControl]="item.get('uid')" [nameControl]="item.get('name')"
+                                [whichDeptUser]="['fdc0cd4d-c3a8-4430-8e29-8a008c08b4ba']">
+                            </ngx-org-user-picker>
+
+                            <button *ngIf="edit_TaskOwnerList" nbButton status="danger" size="tiny" nbTooltip="刪除"
+                                (click)="deleteTaskOwnerFormGroup(i)"><i class="fas fa-minus"></i></button>
+
+                        </td>
+                        <!-- 技術工作天數 -->
+                        <td class="text-center">
+
+                            <mat-form-field
+                                *ngIf="edit_TaskOwnerList || ( edit_TaskOwner && item.get('uid').value===loginInfo.uid )"
+                                class="w-100px">
+                                <input type="number" min="1" matInput formControlName="workDay">
+                                <mat-error></mat-error>
+                            </mat-form-field>
+
+                            <ng-container
+                                *ngIf="!edit_TaskOwnerList && !(edit_TaskOwner && item.get('uid').value===loginInfo.uid)">
+                                {{item.get('workDay').value}}</ng-container>
+                        </td>
+                        <!-- 測試天數 -->
+                        <td class="text-center">
+                            <mat-form-field
+                                *ngIf="edit_TaskOwnerList || ( edit_TaskOwner && item.get('uid').value===loginInfo.uid )"
+                                class="w-100px">
+                                <input type="number" min="0" matInput formControlName="testDay">
+                                <mat-error></mat-error>
+                            </mat-form-field>
+
+                            <ng-container
+                                *ngIf="!edit_TaskOwnerList && !(edit_TaskOwner && item.get('uid').value===loginInfo.uid)">
+                                {{item.get('testDay').value}}</ng-container>
+                        </td>
+                        <!-- 預計開工日期 -->
+                        <td class="text-center">
+                            <mat-form-field
+                                *ngIf="edit_TaskOwnerList || ( edit_TaskOwner && item.get('uid').value===loginInfo.uid )"
+                                class="w-130px">
+                                <input type="date" matInput ngxDateSet formControlName="estStartDate">
+                            </mat-form-field>
+                            <ng-container
+                                *ngIf="!edit_TaskOwnerList && !(edit_TaskOwner && item.get('uid').value===loginInfo.uid)">
+                                {{item.get('estStartDate').value | date :'YYYY/MM/dd'}}
+                            </ng-container>
+                        </td>
+                        <!-- 預計完成日期 -->
+                        <td class="text-center">
+                            <mat-form-field
+                                *ngIf="edit_TaskOwnerList || ( edit_TaskOwner && item.get('uid').value===loginInfo.uid )"
+                                class="w-130px">
+                                <input type="date" matInput ngxDateSet [min]="item.get('estStartDate').value"
+                                    [minDate]="item.get('estStartDate').value" formControlName="estEndDate">
+                            </mat-form-field>
+                            <ng-container
+                                *ngIf="!edit_TaskOwnerList && !(edit_TaskOwner && item.get('uid').value===loginInfo.uid)"
+                                class="w-130px">
+                                {{item.get('estEndDate').value | date :'YYYY/MM/dd'}}
+                            </ng-container>
+                        </td>
+                        <!-- 實際開工日期 -->
+                        <td class="text-center">
+                            <mat-form-field
+                                *ngIf="edit_TaskOwnerList_Check || ( edit_TaskOwner && item.get('uid').value===loginInfo.uid )"
+                                class="w-130px">
+                                <input type="date" matInput ngxDateSet formControlName="realStartDate">
+                            </mat-form-field>
+                            <ng-container
+                                *ngIf="!edit_TaskOwnerList_Check && !(edit_TaskOwner && item.get('uid').value===loginInfo.uid)">
+                                {{item.get('realStartDate').value | date :'YYYY/MM/dd'}}
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+
+            </ng-container>
+
+
+
+            <tr>
+                <td class="title">完工</td>
+                <td colspan="5">
+                    正式上線日期：
+                    <mat-form-field *ngIf="edit_OnlineDate">
+                        <input type="date" ngxDateSet matInput formControlName="onlineDate">
+                    </mat-form-field>
+                    <ng-container *ngIf="!edit_OnlineDate">
+                        {{form.get('onlineDate').value | date :'YYYY/MM/dd'}}
+                    </ng-container>
+
+                </td>
+            </tr>
+            <!-- <tr>
+                <td class="title">技術備註/建議</td>
+                <td colspan="5">
+                    技術實際開工日期：
+                    <ngx-html5-datetime-picker [datetimeControl]="RealStartDate" *ngIf="edit_RealStartDate">
+                    </ngx-html5-datetime-picker>
+                    <ng-container *ngIf="!edit_RealStartDate">
+                        {{form.get('realStartDate').value | date :'YYYY/MM/dd HH:mm'}}
+                    </ng-container>
+                </td>
+            </tr> -->
+        </table>
+
+
+
+
+    </form>
+
+
+
+</div>
+
+<pre *ngIf="debug">
+{{ form.value | json}}
+</pre>

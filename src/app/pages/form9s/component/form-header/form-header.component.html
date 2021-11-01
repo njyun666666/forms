@@ -1,0 +1,72 @@
+<div class="form-header">
+
+    <div class="form-header-title">
+
+
+        <div class="form-header-icon">
+            <span [ngSwitch]="path">
+                <i *ngSwitchCase="'add'" class="fas fa-edit"></i>
+                <i *ngSwitchCase="'sign'" class="fas fa-file-signature"></i>
+                <i *ngSwitchCase="'info'" class="fas fa-file-alt"></i>
+            </span>
+        </div>
+
+
+        <div class="form-header-text">
+            <ng-container [ngSwitch]="path">
+                <div *ngSwitchCase="'add'">申請表單</div>
+                <div *ngSwitchCase="'sign'">簽核表單</div>
+            </ng-container>
+            <div>{{formName}}</div>
+        </div>
+
+
+        <div class="form-header-data" *ngIf="path!=='add'">
+            <div class="">
+                <span class="me-1" [ngxFormLevelLabel]="formLevel" nbTooltip="表單級別">{{formLevelText}}</span>
+                <span nbTooltip="表單編號">{{formSerial}}</span>
+            </div>
+            <div class="form-header-data-div">
+                <div class="form-header-data-title">申請人</div>
+                <div class="form-header-data-value">{{formApplicantName}}</div>
+            </div>
+            <div class="form-header-data-div">
+                <div class="form-header-data-title">申請日期</div>
+                <div class="form-header-data-value">{{formApplicantDate | date:'yyyy/MM/dd HH:mm'}}</div>
+            </div>
+
+        </div>
+
+
+        <div class="form-header-data"
+            *ngIf="path!=='add' && baseData.nowStepApproverList!==null && baseData.nowStepApproverList.length>0 ">
+            <div class="">
+                目前步驟
+            </div>
+            <div class="">
+                <ngx-step-approver [in_list]="baseData.nowStepApproverList"></ngx-step-approver>
+            </div>
+        </div>
+
+
+        <div class="form-header-data" *ngIf="path!=='add' && baseData.result!==null">
+            <div class="">
+                簽核結果
+            </div>
+            <div class="">
+                <span class="form-result-label" [ngxFormResult]="baseData.resultID">{{baseData.result}}</span>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="">
+        <button nbButton matRipple status="" outline
+            (click)="openFlowchart(baseData.formClass,formData?.flowID,signForm?.stepID)">流程圖</button>
+    </div>
+
+
+</div>

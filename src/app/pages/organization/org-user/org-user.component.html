@@ -1,0 +1,90 @@
+<h1>人員清單</h1>
+
+<div class="row my-2">
+    <div class="col">
+
+        <form [formGroup]="queryForm" (ngSubmit)="querysubmit()">
+
+            <mat-card>
+
+                <mat-card-header>
+                    <mat-card-title>人員查詢</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="" class="">
+                                <mat-label>員工編號</mat-label>
+                                <input matInput formControlName="employeeID">
+                                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="" class="">
+                                <mat-label>姓名</mat-label>
+                                <input matInput formControlName="name">
+                                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="" class="">
+                                <mat-label>Email</mat-label>
+                                <input matInput formControlName="email">
+                                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col">
+                            <mat-form-field appearance="" class="">
+                                <mat-label>狀態</mat-label>
+                                <mat-select formControlName="status">
+                                    <mat-option></mat-option>
+                                    <mat-option [value]="1">啟用</mat-option>
+                                    <mat-option [value]="0">停用</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+
+                    <!-- <pre>
+{{ queryForm.value|json}}
+</pre> -->
+
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                    <button mat-raised-button color="primary">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-card-actions>
+
+            </mat-card>
+
+
+        </form>
+
+    </div>
+</div>
+
+
+<div class="row my-4">
+    <div class="col">
+        <button type="button" mat-raised-button color="primary" (click)="openForm()">新增人員</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover "></table>
+
+    </div>
+</div>
+
+<br><br><br><br><br><br>

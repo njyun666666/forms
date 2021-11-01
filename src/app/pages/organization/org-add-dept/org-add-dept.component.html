@@ -1,0 +1,2 @@
+<h1 mat-dialog-title>{{ in_isAdd?'新增':'修改'}}部門</h1>
+<ngx-org-add-dept-form [in_isAdd]="in_isAdd" [in_DeptID]="in_DeptID" [in_ParentDept]="in_ParentDept" (closeEmitter)="close($event)"></ngx-org-add-dept-form>

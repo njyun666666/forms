@@ -1,0 +1,17 @@
+<h1>部門資訊</h1>
+
+<div class="row my-2">
+    <div class="col">
+        <button type="button" mat-raised-button color="primary" (click)="openAddDept()">新增部門</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover"></table>
+
+    </div>
+</div>
+
+<br><br><br><br><br><br>

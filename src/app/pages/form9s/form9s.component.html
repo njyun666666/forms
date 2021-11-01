@@ -1,0 +1,30 @@
+<h2>申請表單</h2>
+
+
+<div class="row">
+
+    <div class="form-card col-12 col-md-4" *ngFor="let item of list">
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    {{item.typeName}}
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="">
+
+                <div class="row">
+                    <div class="add-a col-12 col-xl-4" *ngFor="let form of item.children">
+                        <a [routerLink]="['/form/add/'+form.formClass]">{{form.formName}}</a>
+                    </div>
+                </div>
+
+
+            </mat-card-content>
+
+        </mat-card>
+
+    </div>
+
+</div>

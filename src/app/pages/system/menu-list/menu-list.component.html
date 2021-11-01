@@ -1,0 +1,12 @@
+<H2>項目選單</H2>
+<br />
+<button mat-flat-button color="primary" (click)="openAddDialog()">新增側邊選單</button>
+<br />
+<br />
+
+<table #menuDT datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover"></table>
+
+
+<!-- <button (click)="clearDT()">clear</button>
+
+<button (click)="getMenu()">load</button> -->

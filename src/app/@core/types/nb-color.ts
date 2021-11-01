@@ -1,0 +1,1 @@
+export type NbColor = 'basic' | 'primary' | 'success' | 'info' | 'warning' | 'danger';

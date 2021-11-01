@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{in_isAdd?'新增':'修改'}}遊戲資訊</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div mat-dialog-content>
+
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>遊戲代號</mat-label>
+          <input matInput formControlName="appID" placeholder="Ex. HS" [readonly]="!in_isAdd">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>遊戲名稱</mat-label>
+          <input matInput formControlName="appName" placeholder="Ex. 九州幻想">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>時區</mat-label>
+          <input matInput formControlName="timeZone" type="number" placeholder="Ex. 8">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>地區</mat-label>
+          <mat-select formControlName="area">
+            <mat-option value="TW">TW</mat-option>
+            <mat-option value="KR">KR</mat-option>
+            <mat-option value="US">US</mat-option>
+            <mat-option value="JP">JP</mat-option>
+            <mat-option value="CN">CN</mat-option>
+            <mat-option value="WW">WW</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [nbSpinner]="isSubmit" [disabled]="isSubmit">
+      {{in_isAdd?'新增':'修改'}}
+    </button>
+  </div>
+
+
+</form>

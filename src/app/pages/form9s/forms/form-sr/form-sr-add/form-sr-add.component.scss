@@ -1,0 +1,57 @@
+.mat-radio-button {
+    margin-right: 10px;
+}
+
+.sr-form-header {
+    width: 100%;
+
+    .sr-form-header-title {
+        text-align: center;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 5px;
+    }
+
+    .serial {
+        text-align: right;
+        line-height: 30px;
+    }
+}
+
+.sr-form {
+    width: 100%;
+    td {
+        padding: 5px;
+        border: 1px solid #000;
+    }
+
+    .title {
+        padding: 20px 0;
+        text-align: center;
+        background: #eee;
+    }
+    .sub-title {
+        padding: 10px 0;
+        text-align: center;
+        background: #eee;
+    }
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
+    .td-work {
+        line-height: 30px;
+    }
+
+    button {
+        margin: 8px;
+    }
+}
+
+.w-100px {
+    width: 100px;
+}
+.w-130px {
+    width: 130px;
+}

@@ -1,0 +1,46 @@
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #ccc;
+
+    .form-header-title {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        line-height: 23px;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        .form-header-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .form-header-data {
+            align-self: flex-start;
+            margin-left: 15px;
+            padding-left: 15px;
+            border-left: 1px solid #ccc;
+            // flex-grow: 1;
+
+            .form-header-data-div {
+                display: flex;
+                .form-header-data-title {
+                    min-width: 4.5rem;
+                }
+                .form-header-data-value {
+                    flex-grow: 1;
+                }
+            }
+
+            .form-result-label {
+                font-size: 28px;
+                line-height: 42px;
+            }
+        }
+    }
+}

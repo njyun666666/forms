@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>新增側邊選單</h2>
+
+<mat-dialog-content class="mat-typography" [formGroup]="form">
+  <p>
+    <mat-form-field>
+      <mat-label>選單類型名稱</mat-label>
+      <input matInput formControlName="typeName" placeholder="Ex. 側邊選單">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>狀態</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value=1>開啟</mat-option>
+        <mat-option value=0>關閉</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">取消</button>
+  <button mat-raised-button cdkFocusInitial color="primary" (click)="AddMenuType()">新增</button>
+</mat-dialog-actions>

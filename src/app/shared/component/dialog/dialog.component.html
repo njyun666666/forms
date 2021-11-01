@@ -1,0 +1,8 @@
+<h2 mat-dialog-title *ngIf="dialogData.title!=null && dialogData.title.length>0">{{dialogData.title}}</h2>
+<mat-dialog-content *ngIf="dialogData.content!=null && dialogData.content.length>0" [innerHtml]="dialogData.content">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button nbButton matRipple ghost mat-dialog-close *ngIf="dialogData.btnCancalShow">取消</button>
+    <button nbButton matRipple status="{{dialogData.btnColor}}" [mat-dialog-close]="true"
+        cdkFocusInitial>{{dialogData.btnText}}</button>
+</mat-dialog-actions>

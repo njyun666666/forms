@@ -1,0 +1,52 @@
+<div class="alert alert-primary" role="alert" *ngIf="signForm.stepDescription" [innerHtml]="stepDescriptionHTML">
+</div>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            簽核
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="">
+
+
+
+        <form [formGroup]="form">
+
+            <div class="sform-row">
+                <div class="sform-title"><span>表單編號</span></div>
+                <div class="sform-value">{{formData.serial}}</div>
+            </div>
+
+            <div class="sform-row">
+                <div class="sform-title"><span>目前步驟</span></div>
+                <div class="sform-value">{{signForm.stepName}}</div>
+            </div>
+
+            <div class="sform-row">
+                <div class="sform-title"><span>送達日期</span></div>
+                <div class="sform-value">{{signForm.arrivalDate|date:'yyyy/MM/dd HH:mm'}}</div>
+            </div>
+
+
+            <div class="mt-4">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>簽核意見</mat-label>
+                    <textarea matInput placeholder="" rows="5" formControlName="signContent"></textarea>
+                    <mat-error *ngIf="signContent?.errors?.required">駁回請填寫簽核意見</mat-error>
+                    <mat-error *ngIf="signContent?.errors?.maxlength">
+                        最多{{signContent.errors?.maxlength?.requiredLength}}字</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- {{signContent.errors|json}} -->
+        </form>
+
+
+        <pre *ngIf="debug">
+{{form.value|json}}
+</pre>
+
+    </mat-card-content>
+
+</mat-card>

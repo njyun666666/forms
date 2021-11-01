@@ -1,0 +1,152 @@
+<h2>查詢表單</h2>
+
+
+<div class="row">
+    <div class="col">
+
+
+        <mat-card>
+
+            <mat-card-content class="">
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <mat-form-field appearance="fill" class="w-100">
+                                <mat-label>表單</mat-label>
+                                <mat-select formControlName="formClass" multiple>
+                                    <!-- <mat-option>ALL</mat-option> -->
+                                    <mat-optgroup *ngFor="let type of formClassList" [label]="type.typeName">
+                                        <mat-option *ngFor="let formClass of type.children"
+                                            [value]="formClass.formClass">
+                                            {{formClass.formName}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+
+
+
+                        <div class="col-md-6">
+
+                            <mat-form-field class="w-50" appearance="fill">
+                                <mat-label>申請時間</mat-label>
+                                <input class="" matInput type="date" ngxDateSet formControlName="startDate">
+                                <span matSuffix>&nbsp;&nbsp;&nbsp;~&nbsp;</span>
+                            </mat-form-field>
+                            <mat-form-field class="w-50" appearance="fill">
+                                <mat-label></mat-label>
+                                <input class="" matInput type="date" ngxDateSet formControlName="endDate"
+                                    [min]="form.get('startDate').value" [minDate]="form.get('startDate').value">
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field class="w-100" appearance="fill">
+                                <mat-label>表單編號</mat-label>
+                                <input matInput formControlName="serial">
+                            </mat-form-field>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="w-100 org-picker-div" appearance="fill">
+                                <mat-label>申請人</mat-label>
+                                <input matInput readonly formControlName="applicantsName">
+                                <ngx-org-user-picker class="org-picker-btn" [multiple]="true"
+                                    [userFormArray]="form.get('applicants')"
+                                    (orgPickerCallBackEmitter)="setApplicants($event)">
+                                </ngx-org-user-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col text-end">
+                            <button type="submit" nbButton matRipple status="info">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <pre *ngIf="debug">
+{{form.value|json}}
+</pre>
+
+
+            </mat-card-content>
+
+        </mat-card>
+
+
+    </div>
+</div>
+
+
+
+
+<br><br><br>
+
+
+
+
+<div class="row" [nbSpinner]="isSubmit">
+    <div class="col">
+
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="w-100 row-border hover ">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">級別</th>
+                    <th scope="col" class="text-center">表單</th>
+                    <th scope="col" class="text-center">編號</th>
+                    <th scope="col" class="text-center">申請時間</th>
+                    <th scope="col" class="text-center">申請人</th>
+                    <th scope="col" class="text-center">申請部門</th>
+                    <th scope="col" class="text-center">目前步驟</th>
+                    <th scope="col" class="text-center">簽核結果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of list">
+                    <td class="text-center">
+                        <span class="" [ngxFormLevelLabel]="item.levelID">{{item.level}}</span>
+                    </td>
+                    <td class="text-center">{{item.formName}}</td>
+                    <td class="text-center">
+                        <a [routerLink]="['/form/info']" [queryParams]="{formID:item.formID}">
+                            {{item.serial}}
+                        </a>
+                    </td>
+                    <td class="text-center">{{item.applicantDate | date:'YYYY/MM/dd HH:mm'}}</td>
+                    <td class="text-center">{{item.applicantName}}</td>
+                    <td class="text-center">{{item.applicantDept}}</td>
+                    <td class="text-center">
+                        <ngx-step-approver [in_list]="item.nowStepApproverList"></ngx-step-approver>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.result" [ngxFormResult]="item.resultID">{{item.result}}</span>
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+</div>

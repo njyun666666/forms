@@ -1,0 +1,9 @@
+<div *ngFor="let item of in_list">
+
+    <span class="badge rounded-pill bg-info">{{item.stepName}}</span>
+
+    <ng-container *ngFor="let name of item.approver; let i=index">
+        {{name}}<ng-container *ngIf="item.approver.length!=i+1">,&nbsp;</ng-container>
+    </ng-container>
+
+</div>

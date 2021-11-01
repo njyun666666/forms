@@ -1,0 +1,16 @@
+<ngx-form-header></ngx-form-header>
+
+<div class="form-component-mb">
+    <ngx-form-content></ngx-form-content>
+</div>
+
+<div class="form-component-mb">
+    <ngx-form-sign-add></ngx-form-sign-add>
+</div>
+
+<div class="form-component-mb">
+    <ngx-file [in_fileGroupID]="fileGroupID">
+    </ngx-file>
+</div>
+
+<ngx-form-button-sign [in_signOptionModel]="signOptionModel" (signEmitter)="sign($event)"></ngx-form-button-sign>

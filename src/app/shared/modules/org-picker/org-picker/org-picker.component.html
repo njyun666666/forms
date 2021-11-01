@@ -1,0 +1,59 @@
+<div class="row content org-picker">
+    <div class="col-6 content-main">
+
+        <div class="row content-main-hearder">
+            <div class="col pe-0">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Keyword</mat-label>
+                    <input matInput [(ngModel)]="keyword">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row content-main-list">
+            <div class="col">
+
+                <div class="row" *ngFor="let item of deptList | orgPickerDept:keyword; let i = index;">
+                    <div class="col">
+                        <mat-checkbox class="mat-checkbox-layout-hover" [(ngModel)]="item.checked" (change)="checkboxChange($event,item);">
+                            {{item.deptName}}</mat-checkbox>
+                        <!-- [checked]="selection.isSelected(i)" -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class=" col-1 action d-flex align-items-center justify-content-center">
+        <button mat-mini-fab color="primary" (click)="joinSelect()" title="加入">
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+
+
+
+
+    <div class="col-5 content-selected">
+        <div class="row content-selected-row" *ngFor="let item of selectedList">
+            <div class="col content-selected-item">
+                {{item.deptName}}
+                <mat-icon class="content-selected-delete" (click)="delete(item)" title="刪除">cancel</mat-icon>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="row footer">
+    <div class="col text-end">
+        <button mat-button (click)="cancel()">取消</button>
+        <button mat-raised-button color="primary" (click)="submit()">送出</button>
+    </div>
+</div>

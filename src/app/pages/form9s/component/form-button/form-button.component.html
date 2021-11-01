@@ -1,0 +1,9 @@
+<div class="form-buttom">
+    <div class="">
+        <button *ngIf="in_show_deleteDraftBtn" nbButton matRipple status="danger" size="giant" (click)="deleteDraft()">刪除草稿</button>
+    </div>
+    <div class="">
+        <button nbButton matRipple status="basic" size="giant" (click)="draft()">草稿</button>
+        <button nbButton matRipple status="primary" size="giant" (click)="applicant()">送出</button>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+// @import "~bootstrap/scss/functions";
+// @import "~bootstrap/scss/variables";
+// @import "~bootstrap/scss/mixins";
+// @import "~bootstrap/scss/grid";
+
+#login-main {
+    height: 100%;
+    padding-bottom: 0;
+
+    #login-logo {
+        max-width: 20rem;
+        padding-bottom: 1rem;
+    }
+
+    #login-btn {
+        outline: none;
+        padding: 0.5rem 1rem;
+        img {
+            width: 1.3rem;
+        }
+    }
+    #login-btn-text {
+        margin-left: 10px;
+        font-weight: normal;
+        font-size: 1rem;
+    }
+}
+
+.darkgoldenrod {
+    color: darkgoldenrod;
+}
+
+.red {
+    color: red;
+}
+.MT {
+    margin-top: 20px;
+}
+
+// @include media-breakpoint-up(lg) {
+//     #login-main {
+//         padding-bottom: 20%;
+//     }
+// }

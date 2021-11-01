@@ -1,0 +1,62 @@
+<mat-card [nbSpinner]="isSubmit" nbSpinnerStatus="primary">
+    <mat-card-header class="header">
+        <mat-card-title>
+            附件
+            <span *ngIf="debug">fileGroupID: {{in_fileGroupID}}</span>
+        </mat-card-title>
+
+
+
+
+        <label for="file" class="btn-upload" [nbTooltip]="'上傳附件，限制 '+fileSizeLimit_MB+' MB 以下'"
+            *ngIf="in_fileGroupID!==undefined && in_fileGroupID!==null">
+            <i class="fas fa-paperclip"></i>
+        </label>
+
+
+        <input type="file" name="file" id="file" multiple (change)="onFileSelect($event)">
+
+
+
+
+    </mat-card-header>
+    <mat-card-content class="p0">
+
+
+        <div *ngIf="in_fileGroupID===undefined || in_fileGroupID===null" class="p-3">
+            not found fileGroupID
+        </div>
+
+        <div *ngIf="list.length==0" class="p-3">
+            無附件
+        </div>
+
+
+        <table class="table"
+            *ngIf="in_fileGroupID!==undefined && in_fileGroupID!==null && list!=undefined && list!==null && list.length>0">
+            <thead>
+                <tr>
+                    <th scope="col">檔案</th>
+                    <th scope="col">大小</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of list">
+                    <td>
+                        <a [href]="item.url" target="_blank"> {{item.oFileName}} </a>
+                    </td>
+                    <td>{{item.sizeText}}</td>
+                    <td>
+                        <button nbButton matRipple status="danger" size="tiny" class="btn-delete" nbTooltip="刪除檔案"
+                            (click)="delete(item)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </mat-card-content>
+</mat-card>

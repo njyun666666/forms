@@ -1,0 +1,125 @@
+<!-- <ngx-org-header></ngx-org-header> -->
+
+<div class="row mb-4">
+    <div class="col function-btn">
+        <button type="button" mat-raised-button color="primary" (click)="openAddDept()">新增部門</button>
+        <button type="button" mat-raised-button color="primary" (click)="openUserDept()">新增人員</button>
+    </div>
+</div>
+
+
+
+<div class="row mb-2">
+    <div class="col function-btn">
+        <button type="button" mat-raised-button color="basic" (click)="treeControl.collapseAll()">全部摺疊</button>
+        <button type="button" mat-raised-button color="basic" (click)="treeControl.expandAll()">全部展開</button>
+    </div>
+</div>
+
+
+
+<div class="row">
+
+
+
+    <!-- 組織圖 -->
+    <div class="col-5">
+
+        <div class="tree-div">
+
+
+
+            <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList
+                (cdkDropListDropped)="drop($event)">
+
+                <!-- This is the tree node template for leaf nodes -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding cdkDrag
+                    [cdkDragDisabled]="node.type==='user'" [cdkDragData]="node">
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <button mat-icon-button disabled></button>
+
+
+                    <button mat-button (click)="showEditArea(node)"
+                        [ngClass]="{'nodeActive':node.id===nodeActive?.id && node.deptID===nodeActive?.deptID}">
+                        <span class="material-icons"
+                            [ngClass]="{'manager': node.manager===1}">{{node.type==='dept'?'domain':'person'}}</span>
+                        {{node.name}}
+                    </button>
+                </mat-tree-node>
+
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag
+                    [cdkDragData]="node">
+                    <button mat-icon-button matTreeNodeToggle aria-expanded="true"
+                        [attr.aria-label]="'Toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+
+                    <button mat-button (click)="showEditArea(node)" [ngClass]="{'nodeActive':node.id===nodeActive?.id}">
+                        <span class="material-icons"> {{node.type==='dept'?'domain':'person'}} </span>
+                        {{node.name}}
+                    </button>
+                </mat-tree-node>
+
+            </mat-tree>
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- 部門 -->
+    <div class="col-7 dept-div" *ngIf="nodeActive?.type==='dept'">
+
+        <div class="position-stickt-0">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>{{deptActive?.deptName}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+
+
+                    <div class="row mb-5">
+                        <div class="col dept-function">
+                            <button type="button" mat-raised-button color="primary"
+                                (click)="openAddDept(deptActive)">新增子部門</button>
+                            <button type="button" mat-raised-button color="primary"
+                                (click)="openUserDept(deptActive)">新增成員</button>
+                        </div>
+                    </div>
+
+
+                    <ngx-org-add-dept-form [in_DeptID]="deptActive.deptID" (getOrgEmitter)="getOrgTree()"></ngx-org-add-dept-form>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- 人員 -->
+    <div class="col-7 user-div" *ngIf="nodeActive?.type==='user'">
+        <div class="position-stickt-0">
+            <ngx-org-edit-user-form [in_UID]="userActive.uid" (getOrgEmitter)="getOrgTree()"></ngx-org-edit-user-form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>

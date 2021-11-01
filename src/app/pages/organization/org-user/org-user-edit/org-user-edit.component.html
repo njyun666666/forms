@@ -1,0 +1,16 @@
+<div class="row mb-4">
+    <div class="col-1">
+        <a [routerLink]="['/organization/user']" title="回上一頁">
+            <button type="button" mat-icon-button>
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </a>
+    </div>
+    <div class="col"><h2>修改人員資料</h2></div>
+</div>
+
+
+<ngx-org-edit-user-form [in_UID]="uid"></ngx-org-edit-user-form>
+
+
+<br><br><br><br><br><br>

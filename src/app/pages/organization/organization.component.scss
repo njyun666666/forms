@@ -1,0 +1,46 @@
+.top-button-div {
+    margin-bottom: 10px;
+}
+
+.tree-div {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    padding-right: 20px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+.manager {
+    color: #ff0000;
+}
+.nodeActive {
+    background-color: #e0e0e0;
+}
+.function-btn {
+    button {
+        margin-right: 10px;
+    }
+}
+.dept-function {
+    button {
+        margin-right: 10px;
+    }
+}
+
+.org-picker-div {
+    input {
+        padding-right: 6rem;
+    }
+
+    .org-picker-btn {
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+    }
+}
+.position-stickt-0 {
+    position: sticky;
+    top: 0;
+}

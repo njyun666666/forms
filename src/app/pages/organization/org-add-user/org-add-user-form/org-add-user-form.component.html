@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="addSubmit()">
+
+
+
+    <div class="row">
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>姓名</mat-label>
+                <input matInput formControlName="name">
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>員工編號</mat-label>
+                <input matInput formControlName="employeeID">
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>職稱</mat-label>
+                <mat-select formControlName="titleID">
+                    <mat-option *ngFor="let item of titleList" [value]="item.titleID">{{item.title}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-6">
+
+            <mat-form-field appearance="fill" class="w-100 org-picker-div">
+                <mat-label>部門</mat-label>
+                <input matInput formControlName="deptName" readonly>
+
+                <ngx-org-dept-picker class="org-picker-btn" [deptIDControl]="deptID" [deptNameControl]="deptName">
+                </ngx-org-dept-picker>
+                <!-- <mat-error *ngIf="ApplicantName.hasError('required')"></mat-error> -->
+            </mat-form-field>
+
+
+        </div>
+
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>簽核權</mat-label>
+                <mat-select formControlName="signApprover">
+                    <mat-option [value]="0">無</mat-option>
+                    <mat-option [value]="1">有</mat-option>
+                </mat-select>
+
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>公司別</mat-label>
+                <mat-select formControlName="companyType">
+                    <mat-option *ngFor="let item of companyTypeList" [value]="item.companyType">{{item.typeName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-6">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>狀態</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option [value]="1">啟用</mat-option>
+                    <mat-option [value]="0">停用</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+        <div class="col text-end">
+            <button mat-raised-button color="primary" [nbSpinner]="isSubmit"
+                [disabled]="isSubmit">{{in_isAdd?'新增':'修改'}}</button>
+        </div>
+    </div>
+
+
+    <!-- <pre>
+{{form.value | json}}
+</pre>
+ -->
+
+</form>

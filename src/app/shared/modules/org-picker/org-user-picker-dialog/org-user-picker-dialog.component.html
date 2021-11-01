@@ -1,0 +1,76 @@
+<div class="row content">
+    <div class="col-8 content-main">
+
+        <div class="row content-main-hearder">
+            <div class="col pe-0">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Keyword</mat-label>
+                    <input matInput [(ngModel)]="keyword">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row content-main-list">
+            <div class="col pe-0">
+
+                <table id="list" class="table table-hover w-100">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th></th>
+                            <th>員工編號</th>
+                            <th>姓名</th>
+                            <th>部門</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="list-tr" *ngFor="let item of userList | orgPickerUser:keyword | sort:'employeeID'  ; let i = index;"
+                            (click)="listClick(item)" >
+                            <td class="checkbox-area">
+                                <mat-checkbox readonly [(ngModel)]="item.checked"></mat-checkbox>
+                                <div class="checkbox-mask"></div>
+                            </td>
+                            <td>{{item.employeeID}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.deptName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class=" col-1 action d-flex align-items-center justify-content-center">
+        <button mat-mini-fab color="primary" (click)="joinSelect()" title="加入">
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+
+
+
+
+    <div class="col-3 content-selected">
+        <div class="row content-selected-row" *ngFor="let item of selectedList">
+            <div class="col content-selected-item">
+                <span class="content-selected-item-deptname">{{item.deptName}}</span>
+                <span>{{item.name}}</span>
+                <mat-icon class="content-selected-delete" (click)="delete(item)" title="刪除">cancel</mat-icon>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="row footer">
+    <div class="col text-end">
+        <button mat-button (click)="cancel()">取消</button>
+        <button mat-raised-button color="primary" (click)="submit()">送出</button>
+    </div>
+</div>

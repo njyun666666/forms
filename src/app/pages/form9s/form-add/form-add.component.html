@@ -1,0 +1,14 @@
+<ngx-form-header [in_formClass]="formClass"></ngx-form-header>
+
+<div class="form-component-mb">
+    <ng-container *ngComponentOutlet="componentOutlet"></ng-container>
+</div>
+
+<div class="form-component-mb">
+    <ngx-file [in_fileGroupID]="fileGroupID">
+    </ngx-file>
+</div>
+
+<ngx-form-button [in_show_deleteDraftBtn]="show_deleteDraftBtn" (applicantEmitter)="applicant()"
+    (draftEmitter)="draft()" (deleteDraftEmitter)="deleteDraft()">
+</ngx-form-button>
