@@ -5,6 +5,7 @@
  */
 export const environment = {
   production: true,
-  apiUrl: '/api/',
-  fileSizeLimit_MB: 10
+  apiUrl: "/api/",
+  fileSizeLimit_MB: 1,
+  password: "xSv6mFrn53GbeEZu",
 };
