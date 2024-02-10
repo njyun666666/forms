@@ -7,7 +7,6 @@ export interface SRModel extends FormListModel {
     subject: string;
     content: string;
     onlineDate: Date;
-    // havePhone: number;
     expectedDate: Date;
     taskOwnerList: SRTaskOwnerModel[];
 }

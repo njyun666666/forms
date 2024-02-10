@@ -79,9 +79,15 @@ export class FormSignAddComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+
     if (this.signBtnSub !== undefined) {
       this.signBtnSub.unsubscribe();
     }
+
+    if (this.formData_sign_outputSub !== undefined) {
+      this.formData_sign_outputSub.unsubscribe();
+    }
+
   }
 
 

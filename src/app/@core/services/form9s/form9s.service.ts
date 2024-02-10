@@ -1,6 +1,8 @@
+import { DialogService } from './../dialog.service';
+import { LoadingService } from './../loading.service';
 import { ResponseModel } from 'app/@core/models/response.model';
 import { FormListModel } from '../../models/form9s/form/form-list.model';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from './../api.service';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -16,6 +18,7 @@ import { SignFormModel } from 'app/@core/models/form9s/sign/sign-form.model';
 import { SignLogRequestModel, SignLogViewModel } from 'app/@core/models/form9s/sign/sign-log-view.model';
 import { SignResultType } from 'app/@core/Enum/sign-result-type.enum';
 import { FormsViewModel } from 'app/@core/models/form9s/form/forms.viewmodel';
+import { ResponseCode } from 'app/@core/Enum/response-code.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +48,9 @@ export class Form9sService {
 
   constructor(
     private apiService: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loadingService: LoadingService,
+    private dialogService: DialogService
   ) { }
 
 
@@ -77,10 +82,91 @@ export class Form9sService {
   getBaseData(data: BaseDataRequestModel): Observable<FormBaseDataModel> {
     return this.apiService.post('Form/getBaseData', data);
   }
+
+
+  /**
+ * 草稿
+ */
+  draft(form: FormGroup) {
+    // console.log('sr draft');
+
+    this.loadingService.loading$.next(true);
+
+    // 設定為草稿
+    form.get('status').setValue(0);
+
+    this.applicant$(form.value).subscribe((data) => {
+
+      if (data.code === ResponseCode.success) {
+
+        this.dialogService.goHome({ content: '已儲存草稿' });
+
+      } else {
+
+        this.dialogService.text({ content: data.message });
+        this.loadingService.loading$.next(false);
+      }
+
+    });
+
+
+  }
+
   /**
    * 刪除草稿
    */
-  deleteDraft(data: FormIDModel): Observable<ResponseModel<any>> {
+  deleteDraft(formID: string) {
+    this.loadingService.loading$.next(true);
+
+    this.deleteDraft$({ formID: formID }).subscribe((data) => {
+
+      if (data.code === ResponseCode.success) {
+
+        this.dialogService.goHome({ content: '已刪除草稿' });
+
+      } else {
+
+        this.dialogService.text({ content: data.message });
+        this.loadingService.loading$.next(false);
+      }
+
+    });
+
+  }
+
+
+  /**
+    * 送出申請
+    */
+  applicant(form: FormGroup) {
+
+    this.loadingService.loading$.next(true);
+
+
+    // 設定為正式申請表單
+    form.get('status').setValue(1);
+
+    this.applicant$(form.value).subscribe((data) => {
+
+      if (data.code === ResponseCode.success) {
+
+        this.dialogService.goHome({ content: '已送出申請' });
+
+      } else {
+
+        this.dialogService.text({ content: data.message });
+        this.loadingService.loading$.next(false);
+      }
+
+    });
+
+  }
+
+
+  /**
+   * 刪除草稿
+   */
+  deleteDraft$(data: FormIDModel): Observable<ResponseModel<any>> {
     return this.apiService.post('Form/DeleteDraft', data);
   }
   /**
@@ -88,7 +174,7 @@ export class Form9sService {
    * @param data
    * @returns
    */
-  applicant(data: any): Observable<ResponseModel<any>> {
+  applicant$(data: any): Observable<ResponseModel<any>> {
     return this.apiService.post('Form/Applicant', data);
   }
   /**
@@ -136,7 +222,7 @@ export class Form9sService {
   /**
    * 修改表單狀態
    */
-   signSetResult(data: SignFormModel): Observable<ResponseModel<any>> {
+  signSetResult(data: SignFormModel): Observable<ResponseModel<any>> {
     return this.apiService.post('Form/SignSetResult', data);
   }
   /**

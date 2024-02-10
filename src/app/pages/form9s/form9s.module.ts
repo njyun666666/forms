@@ -21,6 +21,9 @@ import { FormSignAddComponent } from './forms/form-sign-add/form-sign-add.compon
 import { FormButtonSignComponent } from './component/form-button-sign/form-button-sign.component';
 import { SignLogListComponent } from './component/sign-log-list/sign-log-list.component';
 import { FormResultDisplayComponent } from './component/form-result-display/form-result-display.component';
+import { FormDemoAddComponent } from './forms/form-demo/form-demo-add/form-demo-add.component';
+import { FormDemo1AddComponent } from './forms/demo1/form-demo1-add/form-demo1-add.component';
+import { FormBaseAddComponent } from './forms/form-base-add/form-base-add.component';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { FormResultDisplayComponent } from './component/form-result-display/form
     FormSignAddComponent,
     FormButtonSignComponent,
     SignLogListComponent,
-    FormResultDisplayComponent
+    FormResultDisplayComponent,
+    FormDemoAddComponent,
+    FormDemo1AddComponent,
+    FormBaseAddComponent
   ],
   imports: [
     CommonModule,

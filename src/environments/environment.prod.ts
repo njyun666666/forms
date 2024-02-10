@@ -5,7 +5,7 @@
  */
 export const environment = {
   production: true,
-  apiUrl: "https://forms-api.njyunn.com/api/",
-  fileSizeLimit_MB: 1,
-  password: "xSv6mFrn53GbeEZu",
+  apiUrl: '/api/',
+  fileSizeLimit_MB: 10,
+  password: 'xSv6mFrn53GbeEZu'
 };

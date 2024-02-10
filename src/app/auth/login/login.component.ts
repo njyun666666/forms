@@ -1,3 +1,4 @@
+import { environment } from 'environments/environment';
 import { DialogService } from './../../@core/services/dialog.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TokenService } from './../../@core/services/token.service';
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   form: FormGroup = this.fb.group({
     account: ['demo', [Validators.required]],
-    password: ['', [Validators.required]],
+    password: [environment.password, [Validators.required]],
   });
 
 

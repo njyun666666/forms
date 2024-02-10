@@ -24,6 +24,11 @@ $my-menu-item-active-background-color: rgba(255, 255, 255, 0.08);
 button {
   outline: none !important;
 }
+pre {
+  margin: 20px 0;
+  padding: 10px;
+  background: #eee;
+}
 .badge {
   font-size: 90%;
   font-weight: normal;

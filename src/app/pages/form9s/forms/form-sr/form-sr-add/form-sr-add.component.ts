@@ -1,63 +1,30 @@
+import { FormBaseAddComponent } from './../../form-base-add/form-base-add.component';
 import { FormValidatorService } from './../../../../../@core/services/form-validator.service';
 import { TokenService } from './../../../../../@core/services/token.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from './../../../../../@core/services/loading.service';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import * as ClassicEditor from 'assets/packages/ckeditor5';
 import * as dayjs from 'dayjs';
 import { StepTypeEnum } from '../../../../../@core/Enum/step-type.enum';
 import { Form9sService } from '../../../../../@core/services/form9s/form9s.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ResponseCode } from '../../../../../@core/Enum/response-code.enum';
 import { DialogService } from '../../../../../@core/services/dialog.service';
 import { SRFieldNameJson, SRModel, SRTaskOwnerModel } from '../../../../../@core/models/form9s/sr/sr.model';
 import { CkeditorService } from '../../../../../@core/services/ckeditor.service';
-import { environment } from 'environments/environment';
-import { ApplicantDeptModel, ApplicantModel, FormBaseDataModel } from 'app/@core/models/form9s/form/form-base-data.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SignFormModel } from 'app/@core/models/form9s/sign/sign-form.model';
-import { LoginInfoModel } from 'app/@core/models/login-model';
 
 @Component({
   selector: 'ngx-form-sr-add',
   templateUrl: './form-sr-add.component.html',
   styleUrls: ['./form-sr-add.component.scss']
 })
-export class FormSrAddComponent implements OnInit, OnDestroy {
+export class FormSrAddComponent extends FormBaseAddComponent implements OnInit, OnDestroy {
 
-  debug: boolean = !environment.production;
-
-  deleteDraftBtnSub: Subscription;
-  draftBtnSub: Subscription;
-  appliacntBtnSub: Subscription;
-  formData_signSub: Subscription;
-
-
-  loginInfo: LoginInfoModel;
-
-  baseData: FormBaseDataModel;
   formData: SRModel;
-  signForm: SignFormModel;
-
-  formClass: string = 'SR';
-  form: FormGroup;
-
-  /** 簽核步驟StepID*/
-  stepID: number;
-  /** 簽核步驟類型StepType*/
-  stepType: StepTypeEnum;
-
-
-  applicantList: ApplicantModel[];
-  applicantDeptList: ApplicantDeptModel[];
 
 
   // 修改權限
-  edit_ApplicantID: boolean = false;
-  edit_ApplicantDeptID: boolean = false;
-  edit_LevelID: boolean = false;
   edit_Type: boolean = false;
   edit_Other: boolean = false;
   edit_Subject: boolean = false;
@@ -107,27 +74,37 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private fb: FormBuilder,
-    private form9sService: Form9sService,
-    public dialog: MatDialog,
-    private loadingService: LoadingService,
-    private dialogService: DialogService,
-    private route: ActivatedRoute,
-    private ckeditorService: CkeditorService,
-    private sanitizer: DomSanitizer,
-    private tokenService: TokenService,
-    private formValidatorService: FormValidatorService
-  ) { }
+    public fb: FormBuilder,
+    public form9sService: Form9sService,
+    public loadingService: LoadingService,
+    public dialogService: DialogService,
+    public route: ActivatedRoute,
+    public tokenService: TokenService,
+    public formValidatorService: FormValidatorService,
+    public ckeditorService: CkeditorService,
+    public sanitizer: DomSanitizer
+
+  ) {
+    super(
+      fb,
+      form9sService,
+      loadingService,
+      dialogService,
+      route,
+      tokenService,
+      formValidatorService
+    );
+  }
 
   ngOnInit(): void {
 
-    this.loginInfo = this.tokenService.getInfo();
+    /** 表單代號 */
+    this.formClass = 'SR';
+
+    this.fieldNameJson = SRFieldNameJson;
 
 
-    this.baseData = this.route.snapshot.data['baseData'];
-    this.formData = this.route.snapshot.data['formData'];
-    this.signForm = this.route.snapshot.data['signForm'];
-    // console.log(this.formData);
+
 
     this.form = this.fb.group({
       ...this.form9sService.formList(),
@@ -143,68 +120,17 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
     });
 
 
+
+
     // 先把選項停用
-    this.form.get('levelID').disable();
     this.form.get('type').disable();
-    // this.form.get('havePhone').disable();
 
-
-
-
-    // 預設值
-    this.form.get('formClass').setValue(this.formClass);
-    this.form.get('applicantDate').setValue(dayjs().format('YYYY-MM-DD'));
-
-
-    // 申請人 valueChanegs
-    if (this.baseData.applicant !== undefined && this.baseData.applicant !== null) {
-
-      this.applicantList = this.baseData.applicant;
-      this.ApplicantID.setValue(this.applicantList[0].applicantID);
-
-
-      this.form.get('applicantID').valueChanges.subscribe((val) => {
-        const i = this.applicantList.findIndex(x => x.applicantID === val);
-        this.form.get('applicantName').setValue(this.applicantList[i].applicantName);
-        this.applicantDeptList = this.applicantList[i].depts;
-        this.form.get('applicantDeptID').setValue(this.applicantDeptList[0].applicantDeptID);
-      });
-
-      this.form.get('applicantDeptID').valueChanges.subscribe((val) => {
-        this.form.get('applicantDept').setValue(this.applicantDeptList.find(x => x.applicantDeptID === val).applicantDept);
-      });
-
-    }
-
-
-
-    // 設定表單基本資料
-    if (this.formData == null) {
-
-      this.form.get('formID').setValue(this.baseData.formID);
-      this.form.get('levelID').setValue(this.baseData.levels[0].levelID);
-      this.form.get('fileGroupID').setValue(this.baseData.fileGroupID);
-    }
-
-
-
-    // 目前步驟
-    this.stepID = this.baseData.stepID;
-    this.stepType = this.baseData.stepType;
-
-    if (this.signForm !== undefined && this.signForm !== null) {
-      this.stepID = this.signForm.stepID;
-    }
-    // end 設定表單基本資料
-
+    this.baseSettings();
 
 
 
     // 設定表單資料
     if (this.formData !== null) {
-      this.form.patchValue(this.formData);
-
-      // this.form9sService.fileGroupID$.next(this.formData.fileGroupID);
 
       // 日期另外設定
       if (dayjs(this.formData.expectedDate).isValid()) {
@@ -228,34 +154,6 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
 
 
 
-    // 依步驟開修改權限
-    this.setEditAuth();
-
-
-
-
-    // 刪除草稿按鈕訂閱
-    this.deleteDraftBtnSub = this.form9sService.deleteDraftBtn$.subscribe(() => {
-      this.deleteDraft();
-    });
-    // 草稿按鈕訂閱
-    this.draftBtnSub = this.form9sService.draftBtn$.subscribe(() => {
-      this.draft();
-    });
-    // 送出按鈕訂閱
-    this.appliacntBtnSub = this.form9sService.applicantBtn$.subscribe(() => {
-      this.applicant();
-    });
-
-
-    // 簽核用 回傳表單資料
-    this.formData_signSub = this.form9sService.formData_sign$.subscribe((option) => {
-      // console.log('formData_sign$.subscribe');
-      if (this.formValid()) {
-        this.form9sService.formData_sign_output$.next(this.form.value);
-      }
-
-    });
 
 
 
@@ -279,26 +177,12 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
 
 
 
+    // 依步驟開修改權限
+    this.setEditAuth();
   }
 
   ngOnDestroy(): void {
-
-    if (this.deleteDraftBtnSub !== undefined) {
-      this.deleteDraftBtnSub.unsubscribe();
-    }
-
-    if (this.draftBtnSub !== undefined) {
-      this.draftBtnSub.unsubscribe();
-    }
-
-    if (this.appliacntBtnSub !== undefined) {
-      this.appliacntBtnSub.unsubscribe();
-    }
-
-    if (this.formData_signSub !== undefined) {
-      this.formData_signSub.unsubscribe();
-    }
-
+    this.baseOnDestroy();
   }
 
 
@@ -451,16 +335,15 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
   }
 
 
+
   /**
    * 驗證表單
-   * @returns 結果
+   * @returns 錯誤訊息
    */
-  formValid(): boolean {
+  formValidErrors(): string {
 
-    let errors: string = this.formValidatorService.valid(this.form, SRFieldNameJson);
+    let errors: string = '';
     this.taskOwnerList_error = false;
-
-
 
 
     // 簽核步驟
@@ -475,110 +358,9 @@ export class FormSrAddComponent implements OnInit, OnDestroy {
     }
 
 
-
-
-
-
-    if (errors.length > 0) {
-
-      this.loadingService.loading$.next(false);
-      this.dialogService.text({ title: '尚有欄位未填/錯誤', content: errors });
-
-      return false;
-    }
-    // this.loadingService.loading$.next(false);
-
-    // return false;
-    return true;
-  }
-
-
-  /**
-   * 刪除草稿
-   */
-  deleteDraft() {
-    this.loadingService.loading$.next(true);
-
-    this.form9sService.deleteDraft({ formID: this.formData.formID }).subscribe((data) => {
-
-      if (data.code === ResponseCode.success) {
-
-        this.dialogService.goHome({ content: '已刪除草稿' });
-
-      } else {
-
-        this.dialogService.text({ content: data.message });
-        this.loadingService.loading$.next(false);
-      }
-
-    });
+    return errors;
 
   }
-
-  /**
-   * 草稿
-   */
-  draft() {
-    // console.log('sr draft');
-
-    this.loadingService.loading$.next(true);
-
-    // 設定為草稿
-    this.form.get('status').setValue(0);
-
-    this.form9sService.applicant(this.form.value).subscribe((data) => {
-
-      if (data.code === ResponseCode.success) {
-
-        this.dialogService.goHome({ content: '已儲存草稿' });
-
-      } else {
-
-        this.dialogService.text({ content: data.message });
-        this.loadingService.loading$.next(false);
-      }
-
-    });
-
-
-  }
-  /**
-    * 送出申請
-    */
-  applicant() {
-    // console.log('sr applicant');
-
-
-
-    if (!this.formValid()) {
-      return false;
-    }
-
-
-
-    this.loadingService.loading$.next(true);
-
-
-
-    // 設定為正式申請表單
-    this.form.get('status').setValue(1);
-
-    this.form9sService.applicant(this.form.value).subscribe((data) => {
-
-      if (data.code === ResponseCode.success) {
-
-        this.dialogService.goHome({ content: '已送出申請' });
-
-      } else {
-
-        this.dialogService.text({ content: data.message });
-        this.loadingService.loading$.next(false);
-      }
-
-    });
-
-  }
-
 
 
 

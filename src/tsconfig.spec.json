@@ -4,9 +4,7 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "types": [
-      "jasmine",
-      "node",
-      "gapi.auth2"
+      "jasmine"
     ]
   },
   "files": [

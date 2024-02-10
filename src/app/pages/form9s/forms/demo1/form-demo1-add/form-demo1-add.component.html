@@ -1,0 +1,33 @@
+<div class="form-content">
+  <form [formGroup]="form">
+    <mat-form-field *ngIf="edit_ApplicantID">
+      <mat-select formControlName="applicantID">
+        <mat-option *ngFor="let item of applicantList" [value]="item.applicantID">
+          {{item.applicantName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="edit_ApplicantDeptID">
+      <mat-select formControlName="applicantDeptID">
+        <mat-option *ngFor="let item of applicantDeptList" [value]="item.applicantDeptID">
+          {{item.applicantDept}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="!edit_ApplicantDeptID">{{formData?.applicantDept}}</ng-container>
+
+
+
+    <mat-radio-group color="primary" formControlName="levelID">
+      <mat-radio-button *ngFor="let item of baseData.levels" [value]="item.levelID">{{item.level}}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <pre *ngIf="debug">
+      {{ form.value | json}}
+      </pre>
+
+  </form>
+</div>

@@ -13,19 +13,19 @@ export class ToastrService {
 
   show(message: any, title?: any, userConfig?: Partial<NbToastrConfig>) {
 
-    switch (userConfig.status) {
+    // switch (userConfig.status) {
 
-      case 'success':
-        userConfig.icon = 'fa-check';
-        break;
+    //   case 'success':
+    //     userConfig.icon = 'fa-check';
+    //     break;
 
-      case 'danger':
-        userConfig.icon = 'fa-times';
-        break;
+    //   case 'danger':
+    //     userConfig.icon = 'fa-times';
+    //     break;
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
 
 
     this.nbToastrService.show(message, title, userConfig);
