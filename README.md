@@ -1,27 +1,30 @@
-# Forms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.7.
+# Forms 電子表單
 
-## Development server
+## [Demo](https://forms-jyun.vercel.app)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 前端
 
-## Code scaffolding
+[GitHub](https://github.com/njyun666666/forms.angular)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 部署
 
-## Build
+使用[Vercel](https://vercel.com)連接GitHub自動部署
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 使用技術/套件
 
-## Running unit tests
+- Angular 12
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 後端 API
 
-## Running end-to-end tests
+[GitHub](https://github.com/njyun666666/forms.net)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 部署
 
-## Further help
+使用GCP Cloud Run連接GitHub + Dockerfile自動部署
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 使用技術/套件
+
+- .NET 5
+- Dapper
+- MySQL
